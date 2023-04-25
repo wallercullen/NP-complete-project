@@ -25,8 +25,15 @@ for perm in permutations(graph.keys()):  # O(n!)
             if x not in map(coloring.__getitem__, graph[v]):  # O(n)
                 coloring[v] = x
                 break
-    colorings.append(coloring)
+    colorings.append(coloring)  # O(1)
 
-# O((n! n) + n)
-for v, color in min(colorings, key=lambda coloring: sum(coloring.values())).items():
+# O(n! n)
+min_coloring = min(colorings, key=lambda coloring: sum(
+    coloring.values())).items()
+
+# O(n)
+print(sum(min_coloring.values()))
+
+# O(n)
+for v, color in min_coloring:
     print(v, color)
