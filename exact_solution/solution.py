@@ -29,11 +29,11 @@ for perm in permutations(graph.keys()):  # O(n!)
 
 # O(n! n)
 min_coloring = min(colorings, key=lambda coloring: sum(
-    coloring.values())).items()
+    coloring.values()))
 
 # O(n)
-print(sum(min_coloring.values()))
+print(len(set(min_coloring.values())))
 
 # O(n)
-for v, color in min_coloring:
+for v, color in min_coloring.items():
     print(v, color)
