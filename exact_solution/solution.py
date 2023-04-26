@@ -18,14 +18,14 @@ colorings = []
 # O(n! n^3)
 for perm in permutations(graph.keys()):  # O(n!)
     # O(n)
-    coloring = dict([(v, -1) for v in perm])  # O(n)
+    coloring = dict([(v, -1) for v in perm])    # O(n)
     # O(n^3)
-    for v in perm:  # O(n)
-        for x in range(0, len(coloring)):  # O(n)
-            if x not in map(coloring.__getitem__, graph[v]):  # O(n)
+    for v in perm:                              # O(n)
+        for x in range(0, len(coloring)):               # O(n)
+            if x not in map(coloring.__getitem__, graph[v]):    # O(n)
                 coloring[v] = x
                 break
-    colorings.append(coloring)  # O(1)
+    colorings.append(coloring)                  # O(1)
 
 # O(n! n)
 min_coloring = min(colorings, key=lambda coloring: sum(
