@@ -16,18 +16,15 @@ do
     start=`python3 -c 'import time; print(time.time())'`
     python3 ../../solution.py < input > output
     end=`python3 -c 'import time; print(time.time())'`
-
     runtime=$( echo "$end - $start" | bc -l )
 
-    x=$(head -n 1 expected)
-    y=$(head -n 1 output)
-
-    if [ "$x" = "$y" ]
+    if [ "$(head -n 1 expected)" = "$(head -n 1 output)" ]
     then
         echo -e "${test}\t${GREEN}passed\t${BLUE}${runtime}s${NC}"
     else
         echo -e "${test}\t${RED}failed\t${BLUE}${runtime}s${NC}"
     fi
+
     cd ../
 done
 

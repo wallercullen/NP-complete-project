@@ -15,7 +15,8 @@ def main():
             graph[v] = set()
         graph[v].add(u)
 
-    colorings = []
+    min_coloring = None
+
     # O(n! n^3)
     for perm in permutations(graph.keys()):  # O(n!)
         # O(n)
@@ -26,11 +27,11 @@ def main():
                 if x not in map(coloring.__getitem__, graph[v]):    # O(n)
                     coloring[v] = x
                     break
-        colorings.append(coloring)                  # O(1)
 
-    # O(n! n)
-    min_coloring = min(colorings, key=lambda coloring: sum(
-        coloring.values()))
+        if min_coloring is None:
+            min_coloring = coloring
+        elif max(coloring.values()) < max(min_coloring.values()):
+            min_coloring = coloring
 
     # O(n)
     print(len(set(min_coloring.values())))
