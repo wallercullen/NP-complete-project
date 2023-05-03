@@ -1,6 +1,30 @@
 from itertools import permutations
 
 
+def verify_k_coloring(k, coloring, edges):
+   if k != len(set(coloring.values())):
+       return False
+   for v1, v2 in edges:
+       if coloring[v1] == coloring[v2]:
+           return False
+   return True
+
+
+def colorings(graph):
+   for permutation in permutations(graph.keys()):  # O(V!)
+       coloring = dict([(v, -1) for v in permutation])
+       for v in permutation:  # O(V)
+           for color in range(len(coloring)):  # O(V)
+               adjacent_colors = map(coloring.__getitem__, graph[v])  # O(V)
+               if color not in adjacent_colors:  # O(1)
+                   coloring[v] = color
+                   break
+       yield coloring
+
+
+def min_coloring(graph):
+   return min(colorings(graph), key=lambda c: max(c.values()))  # O(V^2)
+
 def main():
     N = int(input())
 
@@ -15,29 +39,13 @@ def main():
             graph[v] = set()
         graph[v].add(u)
 
-    min_coloring = None
-
-    # O(n! n^3)
-    for perm in permutations(graph.keys()):  # O(n!)
-        # O(n)
-        coloring = dict([(v, -1) for v in perm])    # O(n)
-        # O(n^3)
-        for v in perm:                              # O(n)
-            for x in range(0, len(coloring)):               # O(n)
-                if x not in map(coloring.__getitem__, graph[v]):    # O(n)
-                    coloring[v] = x
-                    break
-
-        if min_coloring is None:
-            min_coloring = coloring
-        elif max(coloring.values()) < max(min_coloring.values()):
-            min_coloring = coloring
+    coloring = min_coloring(graph)
 
     # O(n)
-    print(len(set(min_coloring.values())))
+    print(len(set(coloring.values())))
 
     # O(n)
-    for v, color in min_coloring.items():
+    for v, color in coloring.items():
         print(v, color)
 
 
