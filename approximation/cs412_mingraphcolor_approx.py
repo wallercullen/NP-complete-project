@@ -1,5 +1,5 @@
 """
-    pseudocode of the DSatur algorithm from: https://en.wikipedia.org/wiki/DSatur
+    DSatur algorithm from: https://en.wikipedia.org/wiki/DSatur
 """
 
 import collections
@@ -25,7 +25,7 @@ def max_dsat (neighbor_colors, graph):
 
 def dsatur (graph, neighbor_colors):
     """
-        Implements the DSatur algorithm for approximating the min coloring of a graph
+        Implements the DSatur algorithm (greedy) for approximating the min coloring of a graph
         Parameters:
             graph : dict - An subgraph of the graph to be colored represented as an adjacency list,
                     each key is an uncolored vertex in the graph
@@ -35,7 +35,7 @@ def dsatur (graph, neighbor_colors):
     colorings = {}
     while (len (graph) > 0):
         u = max_dsat (neighbor_colors, graph)
-        i = 1
+        i = 0
         while u not in colorings:
             if i not in neighbor_colors[u]:
                 colorings[u] = i
